@@ -2,7 +2,40 @@
 
 #include <iostream> // preprocessor directive - this is the in/out stream library for printing to the console
 
-int main()
+
+
+// add a function
+void DoPrint()
+{
+	using namespace std;
+	cout << "In DoPrint()" << endl;
+}
+
+// void means the function does not return a value to the caller
+/*void ReturnNothing()
+{
+    // This function does not return a value and will fail to compile
+}*/
+ 
+// int means the function returns an integer value to the caller
+int Return5()
+{
+    return 5;
+}
+
+int add(int x, int y)
+{
+	return x + y;
+}
+
+int doubleNumber(int x)
+{
+	return x * 2;
+}
+
+
+
+int main() // this is declared as "int" main because our return value is an integer at the end of the main function
 {
 	using namespace std; // also needed with iostram, 'standard' holds the definitions of cout/cin
 	cout << "First C++ program!" << endl;
@@ -23,6 +56,13 @@ int main()
 	int z = 0; // good practice to always initialize a variable, even as a dummy value, and then check it later to see that it was reassigned
 	cin >> z;  // read what I tell the console into z
 	cout << "You entered the number " << z << endl;
+	
+	DoPrint();
+	cout << Return5() << endl;
+	cout << Return5() + 2 << endl;
+	
+	cout << "My number plus 5 is " << add(z, x) << endl;
+	cout << "Twice my number is " << doubleNumber(z) << endl;
 	
 	return 0; // return value, zero generally means a successful run
 }
