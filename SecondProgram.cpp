@@ -1,4 +1,6 @@
 #include <iostream>
+#include "SecondProgram_Header.h"  // include the header with the multiply function prototype
+
 
 /*
 forward declaration can be used so that functions called within other functions don't necessarily have to be defined first
@@ -21,6 +23,7 @@ int main()
 	using namespace std;
 	cout << "The sum of 3 and 4 is: " << add(3, 4) << endl;
 	cout << "The difference of 3 and 4 is: " << subtract(3, 4) << endl;
+	cout << "The product of 3 and 4 is: " << multiply(3, 4) << endl;  // don't need a forward declaration anywhere because we're using a header file
 	
 	return 0;
 }
