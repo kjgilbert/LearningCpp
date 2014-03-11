@@ -1,5 +1,6 @@
 #include <iostream>
-#include "SecondProgram_Header.h"  // include the header with the multiply function prototype
+#include "SecondProgram_Header.h"  	// include the header with the multiply function prototype
+									// doubel quotes mean it's a header I am supplying, brackets < > mean it's something that came with the compiler and is already tucked away somewhere on my computer
 
 
 /*
@@ -36,4 +37,4 @@ int add(int x, int y) // this is a silly example because we could just move this
 
 
 
-// easy to compile this with:   g++ -o SecondProgram SecondProgram.cpp SecondProgram_Subtract.cpp
+// easy to compile this with:   g++ -o SecondProgram SecondProgram.cpp SecondProgram_Subtract.cpp SecondProgram_Multiply.cpp SecondProgram_Header.h
