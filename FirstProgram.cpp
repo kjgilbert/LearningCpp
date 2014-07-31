@@ -1,7 +1,7 @@
 // working from: http://www.learncpp.com/cpp-tutorial
 
-#include <iostream> // preprocessor directive - this is the in/out stream library for printing to the console
-
+#include <iostream> 
+// preprocessor directive - this is the in/out stream library for printing to the console
 
 
 // add a function
@@ -22,18 +22,14 @@ int Return5()
 {
     return 5;
 }
-
 int add(int x, int y)
 {
 	return x + y;
 }
-
 int doubleNumber(int x)
 {
 	return x * 2;
 }
-
-
 
 int main() // this is declared as "int" main because our return value is an integer at the end of the main function
 {

@@ -16,7 +16,7 @@
 	#undef will undefine a previously defined value
 	
 	conditional compilation:
-	#ifdef		allows the preprocessor to cehck if a value has been previously defined, if so it compiles anything between this and the #endif
+	#ifdef		allows the preprocessor to check if a value has been previously defined, if so it compiles anything between this and the #endif
 	#ifndef		the opposite of above, compile section if item is not defined
 	#endif
 	
@@ -39,8 +39,11 @@ int main()
 	using namespace std;
 	
 	cout << "Hello, " << MY_NAME << endl;
+	int nDollars = 0;
+	cout << "How many dollars do you want to convert? ";
+	cin >> nDollars;
 	int nYen = nDollars * YEN_PER_DOLLAR;
-	
+	cout << nDollars << " dollars equal " << nYen << " yen." << endl;
 	return 0;
 }
 
