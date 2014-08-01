@@ -57,10 +57,22 @@ data types:
 	because 97th code in ASCII is the letter a
 	cout will give the characters, not the underlying numeric code
 		if we want to print the numeric cost, cast it as an integer, i.e. cout << (int) chChar;
+	likewise, these are not the same: 
+		char chValue = '5'; // assigns 53 (ASCII code for '5')
+		char chValue2 = 5; // assigns 5
 	
-
-
-
-
+	escape sequence with a \ in front of something, e.g. a line ending with \n or a tab with \t
+		\' prints a single quote, \" a double and \\ a backslash
+		fun one maybe ->  \a makes an alert, the page says this may make the computer beep!
+	
+	constants - can be literal or symbolic
+		literal constants are numbers that never change, e.g. int x = 5;
+	you can declare a symbolic constant with a preprocessor directive, e.g.:
+		#define YEN_PER_DOLLAR  122
+		int nYen = nDollars * YEN_PER_DOLLAR;
+	they can also be made with the "const" keyword, e.g. const int nYen = 122;
+		there will be a compiler error if you try to change its value anywhere else
+		this is generally better because #define's make things with global scope and defined symbolic constants do not show up in the debugger
+	
 
 */
