@@ -74,5 +74,53 @@ data types:
 		there will be a compiler error if you try to change its value anywhere else
 		this is generally better because #define's make things with global scope and defined symbolic constants do not show up in the debugger
 	
+	in the expression x = 5 - -3;, the first minus is the subtraction operator, and the second is the unary minus operator
+	
+	the % operand (modulus) gives the remainder of x divided by y, e.g. for x % y
+		be careful when using it with negative numbers as it may give either a positive or negative answer for the same result depending on the system
+	
+	iteration shortcuts: 
+		for x = x + y; can also do x += y
+		for x = x * 5; can also do x *=5
+		for x = x + 1; can do ++x, x++ where the order of these matters (++x adds one then evaluates x vs opposite for x++) --- same for --x and x--
+		*** int y = x++; // x is now equal to 6, and 5 is assigned to y
+		
+	commas allow both expressions to be evaluated, e.g . int z = (++x, ++y); // increment x and y, SO HERE Z = 3 if y was 2 before, regardless of X
+		usu. only used in for loops: for (int iii = 1, jjj = 10; iii <= 10; iii++, jjj--)
+	
+	arithmetic if operator:  " ?: " takes 3 operands to do a type of if/else statement
+			if (condition)
+    			x = some value
+			else
+  			  x = some other value
+		can be rewritten as:
+			x = (condition) ? some value : some other value;
+		For example, to put the larger of values x and y in variable z, we could write this:
+			z = (x > y) ? x : y;
+			and to print it out:  cout << ((x > y) ? x : y);
+	**reminder not to use == with floating point numbers since even slight rounding errors will make it false
+		can use Donald Knuth's function:
+#include <cmath>
+bool IsEqual(double dX, double dY)
+{
+    const double dEpsilon = 0.000001; // or some other small number
+    return fabs(dX - dY) <= dEpsilon * fabs(dX);
+}
+
+
+	and operator = &&, or operator = ||  useful in multiple comparisons
+	not operator = ! and has very high precedence, so be sure to use needed parentheses around it
+	the or operator returns true if either side is true or if both sides are true
+	
+	important to remember that && and || don't evaluate past the first element unless they need to, so if there are iterate steps or something in a later part of the line, they are not necessarily performed
+	&& also has higher precedence than || and will be evaluated first, so use ()
+	
+	!(x && y) is equivalent to !x || !y
+	!(x || y) is equivalent to !x && !y
+	
+	
+	
+		
+	
 
 */
