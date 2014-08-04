@@ -151,7 +151,20 @@ bool IsEqual(double dX, double dY)
 	Using Hungarian Notation, it is common to declare global variables with a “g_” prefix
 	generally best not to use global variables though
 	
+	a variable can have scope just within one file if it's declared with the static scope, e.g.:
+		static int nValue; // file scoped variable
+		float fValue; // global variable
+		int main()
+		{
+		    double dValue; // local variable
+		}
+	they are global but only within the one file and cannot be externed to another - also not commonly used
 	
+	**STATIC means something entirely different when not used outside a block
+	Using the static keyword on local variables changes them from automatic duration to fixed duration (also called static duration)
+	A fixed duration variable is one that retains it’s value even after the scope in which it has been created has been exited
+	Fixed duration variables are only created (and initialized) once, and then they are persisted throughout the life of the program
+	Using hungarian notation, it is common to prefix fixed duration variables with “s_”	
 	
 
 */
