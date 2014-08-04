@@ -119,8 +119,39 @@ bool IsEqual(double dX, double dY)
 	!(x || y) is equivalent to !x && !y
 	
 	
+	declaring a variable outside of any block makes it a global variable accessible anywhere
+		they can also be accessed across files, but need a forward declaration to say you will be referring to it
+		this is called an extern keyword
+			global.cpp:
+				// declaration of g_nValue
+				int g_nValue = 5;
+			main.cpp:
+				// extern tells the compiler this variable is declared elsewhere
+				extern int g_nValue;
+ 
+				int main()
+				{
+				    g_nValue = 7;
+				    return 0;
+				}
+		Here is an example of using a header file extern:
+				global.cpp:
+					// declaration of g_nValue
+					int g_nValue = 5;
+					global.h:
+
+					#ifndef GLOBAL_H // header guards
+					#define GLOBAL_H
+					// extern tells the compiler this variable is declared elsewhere
+					extern int g_nValue;
+					#endif
+	if a global variable is going to be used in more than 2 files, it’s better to use the header file approach
+	Some programmers place all of a programs global variables in a file called globals.cpp, and create a header file named globals.h to be included by other .cpp files that need to use them
+	Local variables with the same name as a global variable hide the global variable inside that block. However, the global scope operator (::) can be used to tell the compiler you mean the global version
+	Using Hungarian Notation, it is common to declare global variables with a “g_” prefix
+	generally best not to use global variables though
 	
-		
+	
 	
 
 */
