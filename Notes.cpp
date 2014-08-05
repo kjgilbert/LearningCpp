@@ -418,7 +418,39 @@ bool IsEqual(double dX, double dY)
 	while loop - simplest of all loop types */
 		while (expression)
 			statement;
-/*
+//	while expression is true, it will evaluate the statement continuously until expression is no longer true
+	int iii = 0;
+	while (iii < 10)
+	    {
+	    cout << iii << " ";
+	    iii++;
+	    }
+	cout << "done!";
+/*	have to be careful about infinite loops or it will execute forever
+	while (1) {}; will execute forever
+	useful to iterate and keep track in the console
+*/	// Loop through every number between 1 and 50
+	int iii = 1;
+	while (iii <= 50)
+	{
+	    // print the number
+	    cout << iii << " "; 
+	    // if the loop variable is divisible by 10, print a newline
+	    if (iii % 10 == 0)
+	        cout << endl; 
+	    // increment the loop counter
+	    iii++;
+	}
+/*	5.5 QUIZ:
+	we want jjj to return to the value of 1 each time the iii loop iterates
+	q2 is in PrintASCII program
+	
+	
+	
+	
+			
+	
+	
 	
 	
 	
