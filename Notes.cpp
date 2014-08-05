@@ -306,7 +306,28 @@ bool IsEqual(double dX, double dY)
 	}
 	
 	straight-line programs have sequential flow that never changes - not always desired since we may want to allow secondary options if something invalid is entered for e.g.
+	flow control statements let the author change the CPU's path through the program
+	several tools:
+		halt the program at any point = exit()   --- can do exit(0) to return a 0 to the OS, need the C standard library from: #include <cstdlib>
+		jump to another statement = goto(), break(), continue()
+		conditional branch = if()  -- if statements generate multiple possible paths, there are also switch statements
+		loops = do while, while, for  -- repeat something a certain amount of times
+		exceptions -- if an error pops up, program goes to the exception - this is advanced
+	if (expression)
+		statement
+	OR
+	if (expression)
+		statement
+	else
+		statement2
+		
+	else statements always pair up with the last unmatched if statement, so bad form to leave only one afte 2 ifs that were nested because it will not be clear which it belongs to
+		this is called a dangling else
 	
+		
+	
+		
+		
 
 	
 	
