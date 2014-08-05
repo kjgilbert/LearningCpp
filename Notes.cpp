@@ -51,17 +51,17 @@ data types:
 	all non-zero integers resolve to true, while only 0 resolves to false
 	
 	chars hold a small number or a character in ASCII
-	to assign a character, use single quotes (the following do the same thing)
+	to assign a character, use single quotes (the following do the same thing)*/
 		char chValue = 'a';
 		char chValue2 = 97;
-	because 97th code in ASCII is the letter a
+/*	because 97th code in ASCII is the letter a
 	cout will give the characters, not the underlying numeric code
 		if we want to print the numeric cost, cast it as an integer, i.e. cout << (int) chChar;
-	likewise, these are not the same: 
+	likewise, these are not the same: 	*/
 		char chValue = '5'; // assigns 53 (ASCII code for '5')
 		char chValue2 = 5; // assigns 5
 	
-	escape sequence with a \ in front of something, e.g. a line ending with \n or a tab with \t
+/*	escape sequence with a \ in front of something, e.g. a line ending with \n or a tab with \t
 		\' prints a single quote, \" a double and \\ a backslash
 		fun one maybe ->  \a makes an alert, the page says this may make the computer beep!
 	
@@ -99,7 +99,7 @@ data types:
 			z = (x > y) ? x : y;
 			and to print it out:  cout << ((x > y) ? x : y);
 	**reminder not to use == with floating point numbers since even slight rounding errors will make it false
-		can use Donald Knuth's function:
+		can use Donald Knuth's function:	*/
 #include <cmath>
 bool IsEqual(double dX, double dY)
 {
@@ -108,7 +108,7 @@ bool IsEqual(double dX, double dY)
 }
 
 
-	and operator = &&, or operator = ||  useful in multiple comparisons
+/*	and operator = &&, or operator = ||  useful in multiple comparisons
 	not operator = ! and has very high precedence, so be sure to use needed parentheses around it
 	the or operator returns true if either side is true or if both sides are true
 	
@@ -122,10 +122,10 @@ bool IsEqual(double dX, double dY)
 	declaring a variable outside of any block makes it a global variable accessible anywhere
 		they can also be accessed across files, but need a forward declaration to say you will be referring to it
 		this is called an extern keyword
-			global.cpp:
+			global.cpp:	*/
 				// declaration of g_nValue
 				int g_nValue = 5;
-			main.cpp:
+//			main.cpp:
 				// extern tells the compiler this variable is declared elsewhere
 				extern int g_nValue;
  
@@ -134,8 +134,8 @@ bool IsEqual(double dX, double dY)
 				    g_nValue = 7;
 				    return 0;
 				}
-		Here is an example of using a header file extern:
-				global.cpp:
+//		Here is an example of using a header file extern:
+//				global.cpp:
 					// declaration of g_nValue
 					int g_nValue = 5;
 					global.h:
@@ -145,20 +145,20 @@ bool IsEqual(double dX, double dY)
 					// extern tells the compiler this variable is declared elsewhere
 					extern int g_nValue;
 					#endif
-	if a global variable is going to be used in more than 2 files, it’s better to use the header file approach
+/*	if a global variable is going to be used in more than 2 files, it’s better to use the header file approach
 	Some programmers place all of a programs global variables in a file called globals.cpp, and create a header file named globals.h to be included by other .cpp files that need to use them
 	Local variables with the same name as a global variable hide the global variable inside that block. However, the global scope operator (::) can be used to tell the compiler you mean the global version
 	Using Hungarian Notation, it is common to declare global variables with a “g_” prefix
 	generally best not to use global variables though
 	
-	a variable can have scope just within one file if it's declared with the static scope, e.g.:
+	a variable can have scope just within one file if it's declared with the static scope, e.g.:	*/
 		static int nValue; // file scoped variable
 		float fValue; // global variable
 		int main()
 		{
 		    double dValue; // local variable
 		}
-	they are global but only within the one file and cannot be externed to another - also not commonly used
+/*	they are global but only within the one file and cannot be externed to another - also not commonly used
 	
 	**STATIC means something entirely different when not used outside a block
 	Using the static keyword on local variables changes them from automatic duration to fixed duration (also called static duration)
@@ -191,7 +191,7 @@ bool IsEqual(double dX, double dY)
 	in these cases, the C++ static_cast should be used instead of the C-style cast
 	
 	An enumerated type is a data type where every possible value is defined as a symbolic constant (called an enumerator). Enumerated types are declared via the enum keyword. Let’s look at an example:
-		// define a new enum named Color
+*/		// define a new enum named Color
 		enum Color
 		{
 		    // Here are the enumerators
@@ -208,11 +208,11 @@ bool IsEqual(double dX, double dY)
 		// Declare a variable of enumerated type Color
 		Color eColor = COLOR_WHITE;
 	
-	Defining an enumerated type does not allocate any memory. When a variable of the enumerated type is declared (such as eColor in the example above), memory is allocated for that variable at that time
+/*	Defining an enumerated type does not allocate any memory. When a variable of the enumerated type is declared (such as eColor in the example above), memory is allocated for that variable at that time
 	Enum variables are the same size as an int variable. This is because each enumerator is automatically assigned an integer value based on it’s position in the enumeration list
 
 	It is possible to explicitly define the value of enumerator. These integer values can be positive or negative and can be non-unique. Any non-defined enumerators are given a value one greater than the previous enumerator.
-		// define a new enum named Animal
+*/		// define a new enum named Animal
 		enum Animal
 		{
     		ANIMAL_CAT = -3,
@@ -222,12 +222,12 @@ bool IsEqual(double dX, double dY)
     		ANIMAL_GIRAFFE = 5,
     		ANIMAL_CHICKEN // assigned 6
 		};
-	because enumerated values evaluate to integers, they can be assigned to integer variables:
+//	because enumerated values evaluate to integers, they can be assigned to integer variables:
 		int nValue = ANIMAL_PIG;
-	However, the compiler will not implicitly cast an integer to an enumerated value. The following will produce a compiler error:
+//	However, the compiler will not implicitly cast an integer to an enumerated value. The following will produce a compiler error:
 		Animal eAnimal = 5; // will cause compiler error
 	
-	Enumerated types are incredibly useful for code documentation and readability purposes when you need to represent a specific number of states
+/*	Enumerated types are incredibly useful for code documentation and readability purposes when you need to represent a specific number of states
 	
 	Typedefs allow the programmer to create an alias for a data type, and use the aliased name instead of the actual type name. To declare a typedef, simply use the typedef keyword, followed by the type to alias, followed by the alias name
 		typedef long miles; // define miles as an alias for long
@@ -246,14 +246,14 @@ bool IsEqual(double dX, double dY)
 		allows us to group variables of mixed data types together into a single unit
 	
 	Because structs are user-defined, we first have to tell the compiler what our struct looks like before we can begin using it. To do this, we declare our struct using the struct keyword. Here is an example of a struct declaration:
-		struct Employee
+*/		struct Employee
 		{
 		    int nID;
 		    int nAge;
 		    float fWage;
 		};
-	declare an employee simply by: Employee sJoe;
-	In order to access the individual members, we use the member selection operator (which is a period)
+//	declare an employee simply by: Employee sJoe;
+//	In order to access the individual members, we use the member selection operator (which is a period)
 		Employee sJoe;
 		sJoe.nID= 14; // initialize nID within sJoe
 		sJoe.nAge = 32; // initialize nAge within sJoe
@@ -272,24 +272,24 @@ bool IsEqual(double dX, double dY)
 		// Today is Joe's birthday
 		sJoe.nAge++;
 	
-	Another big advantage of using structs over individual variables is that we can pass the entire struct to a function that needs to work with the members
+/*	Another big advantage of using structs over individual variables is that we can pass the entire struct to a function that needs to work with the members
 	
 	Structs can contain other structs - call something within with another level of dot:  sMyCompany.sCEO.fWage;
 	
 	Initializing structs member by member is a little cumbersome, so C++ supports a faster way to initialize structs using an initializer list. This allows you to initialize some or all the members of a struct at declaration time.
-		struct Employee
+*/		struct Employee
 		{
 		    int nID;
 		    int nAge;
 		    float fWage;
 		};
-		Employee sJoe = {1, 42, 60000.0f}; // nID=1, nAge=42, fWage=60000.0
+/*		Employee sJoe = {1, 42, 60000.0f}; // nID=1, nAge=42, fWage=60000.0
 	this also works for nested structs, just have something like: Company sCo1 = {{1, 42, 60000.0f}, 5};
 	It is common to declare structs in a header file, so they can be accessed by multiple source files
 	
 	
 	QUIZ: (4.7)
-	struct Advertising
+*/	struct Advertising
 	{
 		int numAds;
 		float percentUsersClicked;
@@ -305,7 +305,7 @@ bool IsEqual(double dX, double dY)
 		cout << sAdvertising.numAds * sAdvertising.percentUsersClicked * sAdvertising.earnedPerAd << endl;
 	}
 	
-	straight-line programs have sequential flow that never changes - not always desired since we may want to allow secondary options if something invalid is entered for e.g.
+/*	straight-line programs have sequential flow that never changes - not always desired since we may want to allow secondary options if something invalid is entered for e.g.
 	flow control statements let the author change the CPU's path through the program
 	several tools:
 		halt the program at any point = exit()   --- can do exit(0) to return a 0 to the OS, need the C standard library from: #include <cstdlib>
@@ -314,12 +314,12 @@ bool IsEqual(double dX, double dY)
 		loops = do while, while, for  -- repeat something a certain amount of times
 		exceptions -- if an error pops up, program goes to the exception - this is advanced
 	if (expression)
-		statement
+		statement;
 	OR
 	if (expression)
-		statement
+		statement;
 	else
-		statement2
+		statement2;
 		
 	else statements always pair up with the last unmatched if statement, so bad form to leave only one afte 2 ifs that were nested because it will not be clear which it belongs to
 		this is called a dangling else
@@ -330,7 +330,7 @@ bool IsEqual(double dX, double dY)
 	switches are used instead of doing one after another after another if statement when you want to find variable equality
 	the switch expression is evalutated to produce a value, and each case label is tested against this value for equality
 	If a case label matches, the statements after the case label are executed. If no case label matches the switch expression, the code under the default label is executed (if it exists)
-		void PrintColor(Colors eColor)
+*/		void PrintColor(Colors eColor)
 		{
 			using namespace std;
 			switch (eColor)		//Floating point variables and other non-integral types may not be used here.
@@ -349,7 +349,7 @@ bool IsEqual(double dX, double dY)
 				break;
 			}
 		}
-	This also works - multiple case labels for the same statement
+/*	This also works - multiple case labels for the same statement	*/
 		bool IsNumber(char cChar)
 		{
     		switch (cChar)
@@ -366,9 +366,9 @@ bool IsEqual(double dX, double dY)
             		return false;
     		}
 		}
-	** IMPORTANT to know that a case statement does not stop executing until either it reaches the end of the block, a return statement, a goto statement, or a break statement
+/*	** IMPORTANT to know that a case statement does not stop executing until either it reaches the end of the block, a return statement, a goto statement, or a break statement
 		that is why each case has something to stop it from overflowing into the next, otherwise "fall-through" happens
-		e.g.:	switch (2)
+		e.g.:*/	switch (2)
 				{
 				   case 1: // Does not match -- skipped
 				       cout << 1 << endl;
@@ -381,9 +381,9 @@ bool IsEqual(double dX, double dY)
 				   default:
 				       cout << 5 << endl; // This is also executed
 				}
-	a break statement tells the compiler that we are done with the current statement (e.g. a switch, or a while or do while or for loop_ and will continue on to the statement after the end of the switch block
+/*	a break statement tells the compiler that we are done with the current statement (e.g. a switch, or a while or do while or for loop_ and will continue on to the statement after the end of the switch block
 	
-	QUIZ 5.3:
+	QUIZ 5.3:	*/
 	using namespace std;
 	int Calculate(int x, int y, char z)
 	{
@@ -406,14 +406,19 @@ bool IsEqual(double dX, double dY)
 				cout << "Error" << endl;
 				exit(1)
 		}
-	}
-	
+	}	/*
+		
 	goto statements make the CPU jump to another spot in the code
 	useful to make something try again if it fails previously
 	The goto statement and it’s corresponding statement label must appear in the same function
 		you write a statement label, and follow it with a clon, and then use the goto at a later point to say goto staetment.label;
 	you cannot jump forward to a variable that's initialized in the same block as the goto
 	generally people don't use goto's
+	
+	while loop - simplest of all loop types */
+		while (expression)
+			statement;
+/*
 	
 	
 	
