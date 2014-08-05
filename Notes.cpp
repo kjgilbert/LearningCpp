@@ -305,6 +305,8 @@ bool IsEqual(double dX, double dY)
 		cout << sAdvertising.numAds * sAdvertising.percentUsersClicked * sAdvertising.earnedPerAd << endl;
 	}
 	
+	straight-line programs have sequential flow that never changes - not always desired since we may want to allow secondary options if something invalid is entered for e.g.
+	
 
 	
 	
