@@ -323,6 +323,94 @@ bool IsEqual(double dX, double dY)
 		
 	else statements always pair up with the last unmatched if statement, so bad form to leave only one afte 2 ifs that were nested because it will not be clear which it belongs to
 		this is called a dangling else
+		so it i best to enclose all if statements within a block
+		e.g.:  if (){if () else} else;
+	if's can be used as error checking or to do early returns
+	
+	switches are used instead of doing one after another after another if statement when you want to find variable equality
+	the switch expression is evalutated to produce a value, and each case label is tested against this value for equality
+	If a case label matches, the statements after the case label are executed. If no case label matches the switch expression, the code under the default label is executed (if it exists)
+		void PrintColor(Colors eColor)
+		{
+			using namespace std;
+			switch (eColor)		//Floating point variables and other non-integral types may not be used here.
+			{
+				case COLOR_BLACK:		//this is a case label, it is followed by a constant expression which must be a unique value within that case, and that expression is tested for equality against the expression following the switch keyword
+					cout << "Black";		//executed if quality is TRUE
+					break;		//this is just to say we're done with this case
+				case COLOR_WHITE:
+					cout << "White";
+					break;
+				case COLOR_RED:
+					cout << "Red";
+					break;
+				default:		//this is the default label and is executed only if none of the above match -- it is optional to have here
+					cout << "Unknown";
+				break;
+			}
+		}
+	This also works - multiple case labels for the same statement
+		bool IsNumber(char cChar)
+		{
+    		switch (cChar)
+    		{
+        		case '0': //if any of the labels match, it returns true
+        		case '1':
+        		case '2':
+        		case '3':
+        		case '4':
+        		case '5':
+        		case '6':
+            		return true;
+        		default:
+            		return false;
+    		}
+		}
+	** IMPORTANT to know that a case statement does not stop executing until either it reaches the end of the block, a return statement, a goto statement, or a break statement
+		that is why each case has something to stop it from overflowing into the next, otherwise "fall-through" happens
+		e.g.:	switch (2)
+				{
+				   case 1: // Does not match -- skipped
+				       cout << 1 << endl;
+				   case 2: // Match!  Execution begins at the next statement
+				       cout << 2 << endl; // Execution begins here
+				   case 3:
+				       cout << 3 << endl; // This is also executed
+				   case 4:
+				       cout << 4 << endl; // This is also executed
+				   default:
+				       cout << 5 << endl; // This is also executed
+				}
+	a break statement tells the compiler that we are done with the current statement (e.g. a switch, or a while or do while or for loop_ and will continue on to the statement after the end of the switch block
+	
+	QUIZ:
+	using namespace std;
+	int Calculate(int x, int y, char z)
+	{
+		
+		switch(z)
+		{
+			case '+':
+				cout << x + y << endl;
+				break;
+			case '-':
+				cout << x - y << endl;
+				break;
+			case '*':
+				cout << x * y << endl;
+				break;
+			case '/':
+				cout << x / y << endl;
+				break;
+			default:
+				cout << "Error" << endl;
+				exit(1)
+		}
+	}
+	
+	
+	
+	
 	
 		
 	
