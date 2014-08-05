@@ -512,7 +512,51 @@ nValue = 1;
 		}
 	3. it will try to make it -1 before the loop stops, but it was initiated as unsigned, so causes an error and the loop will run forever
 	
+	5.8-- break and continue
+	break statement causes a loop or switch statement to terminate
+	continue statement lets you jump back to the beginning of a loop sooner than otherwise reaching the end of the block
+*/
+for (int iii=0; iii < 20; iii++)
+{
+    // if the number is divisible by 4, skip this iteration
+    if ((iii % 4) == 0)
+        continue;
+ 
+    cout << iii << endl;
+}
+/*	the above program prints all numbers between 0-19 that are not divisible by 4
+	BE CAREFUL with continue though since it is easier to create an infinite loop
 	
+	generally breaks and continues can make flow hard to read, but they can also help a lot
+	Keeping the number of nested blocks down often improves code readability more than a break or continue harms it
+	
+	5.9-- random number generation
+	PRNG = pseudo random number generator
+		this is a program that takes a starting number called a seed and using math transforms it into some other number seemingly unrelated to the seed
+		then repeats to make more "random" numbers
+	the c standard library has random number generator functions
+		rand() and srand()
+		srand() sets the initial seed value. srand() should only be called once
+		rand() generates the next random number in the sequence (starting from the seed set by srand())
+	rand() generates pseudo-random integers between 0 and RAND_MAX, a constant in cstdlib that is typically set to 32767
+	often we want numbers between two other values, not RAND_MAX, which we’ll call nLow and nHigh
+		we can take the results of rand() and convert them to what we want
+*/
+// Generate a random number between nLow and nHigh (inclusive)
+unsigned int GetRandomNumber(int nLow, int nHigh)
+{
+    return (rand() % (nHigh - nLow + 1)) + nLow;
+}
+/*
+	If you run the rand() sample program above multiple times, you will note that it prints the same result every time! This means that while each number in the sequence is seemingly random with regards to the previous ones, the entire sequence is not random at all
+		that means our program ends up totally predictable (the same inputs lead to the same outputs every time)
+		this can be useful if you want to replicate a result
+		that is why you can provide the same seed and get the same answer
+	we need some way to pick a seed that’s not a fixed number
+		usually done by using the system clock because the time is always different whenever something is run
+	time() is a function that returns the number of seconds since midnight on Jan 1, 1970
+		uses the ctime header
+		then initialize srand() with a call to time(0)
 	
 			
 	
