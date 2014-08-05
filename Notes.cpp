@@ -383,7 +383,7 @@ bool IsEqual(double dX, double dY)
 				}
 	a break statement tells the compiler that we are done with the current statement (e.g. a switch, or a while or do while or for loop_ and will continue on to the statement after the end of the switch block
 	
-	QUIZ:
+	QUIZ 5.3:
 	using namespace std;
 	int Calculate(int x, int y, char z)
 	{
@@ -408,6 +408,12 @@ bool IsEqual(double dX, double dY)
 		}
 	}
 	
+	goto statements make the CPU jump to another spot in the code
+	useful to make something try again if it fails previously
+	The goto statement and it’s corresponding statement label must appear in the same function
+		you write a statement label, and follow it with a clon, and then use the goto at a later point to say goto staetment.label;
+	you cannot jump forward to a variable that's initialized in the same block as the goto
+	generally people don't use goto's
 	
 	
 	
