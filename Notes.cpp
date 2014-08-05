@@ -164,7 +164,149 @@ bool IsEqual(double dX, double dY)
 	Using the static keyword on local variables changes them from automatic duration to fixed duration (also called static duration)
 	A fixed duration variable is one that retains it’s value even after the scope in which it has been created has been exited
 	Fixed duration variables are only created (and initialized) once, and then they are persisted throughout the life of the program
-	Using hungarian notation, it is common to prefix fixed duration variables with “s_”	
+	Using hungarian notation, it is common to prefix fixed duration variables with “s_”
+	
+	type conversion - convert data of one type to another type
+	in the expression 2 + 3.14159, the + operator requires both operands to be the same type. In this case, the left operand is an int, and the right operand is a double. Because double is higher in the heirarchy, the int gets converted to a double
+	the hierarchy is: 
+		Long double (highest)
+		Double
+		Float
+		Unsigned long int
+		Long int
+		Unsigned int
+		Int (lowest)
+	Char and short are always implicitly promoted to integers (or unsigned integers) before evaluation. This is called widening
+	Many mixed conversion work as expected. For example, int nValue = 10 * 2.7 yields the result 27. 10 is promoted to a float, 10.0 * 2.7 evaluates to 27.0, and 27.0 is truncated into an integer (which the compiler will complain about)
+	Many new programmers try something like this: float fValue = 10 / 4;. However, because 10 and 4 are both integers, no promotion takes place. Integer division is performed on 10 / 4, resulting in the value of 2, which is then implicitly converted to 2.0 and assigned to fValue
+	use casting to tell it to do floating point division
+		int nValue1 = 10;
+		int nValue2 = 4;
+		float fValue = (float)nValue1 / nValue2;
+	
+	In order to announce to the compiler that you are explicitly doing something you recognize is potentially unsafe (but want to do anyway), you should use a static_cast:
+		int nValue = 48;
+		char ch = static_cast<char>(nValue);
+	casting should be avoided if at all possible, because any time a cast is used, there is potential for trouble. But there are many times when it can not be avoided
+	in these cases, the C++ static_cast should be used instead of the C-style cast
+	
+	An enumerated type is a data type where every possible value is defined as a symbolic constant (called an enumerator). Enumerated types are declared via the enum keyword. Let’s look at an example:
+		// define a new enum named Color
+		enum Color
+		{
+		    // Here are the enumerators
+		    // These define all the possible values this type can hold
+		    COLOR_BLACK,
+		    COLOR_RED,
+		    COLOR_BLUE,
+		    COLOR_GREEN,
+		    COLOR_WHITE,
+		    COLOR_CYAN,
+		    COLOR_YELLOW,
+		    COLOR_MAGENTA
+		};
+		// Declare a variable of enumerated type Color
+		Color eColor = COLOR_WHITE;
+	
+	Defining an enumerated type does not allocate any memory. When a variable of the enumerated type is declared (such as eColor in the example above), memory is allocated for that variable at that time
+	Enum variables are the same size as an int variable. This is because each enumerator is automatically assigned an integer value based on it’s position in the enumeration list
+
+	It is possible to explicitly define the value of enumerator. These integer values can be positive or negative and can be non-unique. Any non-defined enumerators are given a value one greater than the previous enumerator.
+		// define a new enum named Animal
+		enum Animal
+		{
+    		ANIMAL_CAT = -3,
+		    ANIMAL_DOG, // assigned -2
+    		ANIMAL_PIG, // assigned -1
+    		ANIMAL_HORSE = 5,
+    		ANIMAL_GIRAFFE = 5,
+    		ANIMAL_CHICKEN // assigned 6
+		};
+	because enumerated values evaluate to integers, they can be assigned to integer variables:
+		int nValue = ANIMAL_PIG;
+	However, the compiler will not implicitly cast an integer to an enumerated value. The following will produce a compiler error:
+		Animal eAnimal = 5; // will cause compiler error
+	
+	Enumerated types are incredibly useful for code documentation and readability purposes when you need to represent a specific number of states
+	
+	Typedefs allow the programmer to create an alias for a data type, and use the aliased name instead of the actual type name. To declare a typedef, simply use the typedef keyword, followed by the type to alias, followed by the alias name
+		typedef long miles; // define miles as an alias for long
+		// The following two statements are equivalent:
+		long nDistance;
+		miles nDistance;
+	A typedef does not define new type, but is just another name for an existing type
+	they're used for readability
+		typedef int testScore;
+ 		int GradeTest(); // less clear what the returned value means
+		testScore GradeTest(); // here we know its returning the score
+	
+	also makes it easy to go back and change a variable's type just in the one place where it was defined as an int or long for example
+	
+	a struct is a group of info - a user-defined aggregate of data
+		allows us to group variables of mixed data types together into a single unit
+	
+	Because structs are user-defined, we first have to tell the compiler what our struct looks like before we can begin using it. To do this, we declare our struct using the struct keyword. Here is an example of a struct declaration:
+		struct Employee
+		{
+		    int nID;
+		    int nAge;
+		    float fWage;
+		};
+	declare an employee simply by: Employee sJoe;
+	In order to access the individual members, we use the member selection operator (which is a period)
+		Employee sJoe;
+		sJoe.nID= 14; // initialize nID within sJoe
+		sJoe.nAge = 32; // initialize nAge within sJoe
+		sJoe.fWage = 24.15; // initialize fWage within sJoe
+	
+		Employee sFrank; // create an Employee struct for Frank
+		sFrank.nID = 15;
+		sFrank.nAge = 28;
+		sFrank.fWage = 18.27;
+	
+		int nTotalAge = sJoe.nAge + sFrank.nAge;
+		if (sJoe.fWage > sFrank.fWage)
+		    cout << "Joe makes more than Frank" << endl;
+		// Frank got a promotion
+		sFrank.fWage += 2.50;
+		// Today is Joe's birthday
+		sJoe.nAge++;
+	
+	Another big advantage of using structs over individual variables is that we can pass the entire struct to a function that needs to work with the members
+	
+	Structs can contain other structs - call something within with another level of dot:  sMyCompany.sCEO.fWage;
+	
+	Initializing structs member by member is a little cumbersome, so C++ supports a faster way to initialize structs using an initializer list. This allows you to initialize some or all the members of a struct at declaration time.
+		struct Employee
+		{
+		    int nID;
+		    int nAge;
+		    float fWage;
+		};
+		Employee sJoe = {1, 42, 60000.0f}; // nID=1, nAge=42, fWage=60000.0
+	this also works for nested structs, just have something like: Company sCo1 = {{1, 42, 60000.0f}, 5};
+	It is common to declare structs in a header file, so they can be accessed by multiple source files
+	
+	
+	QUIZ: (4.7)
+	struct Advertising
+	{
+		int numAds;
+		float percentUsersClicked;
+		float earnedPerAd;
+	};
+	Advertising steak = {5, 0.76, 40};
+	void PrintInformation(Advertising sAdvertising)
+	{
+	    using namespace std;
+	    cout << "Number of Ads:   " << sAdvertising.numAds << endl;
+	    cout << "Percent of users who clicked on ads:  " << sAdvertising.percentUsersClicked << endl;
+	    cout << "Amount earned per ad: " << sAdvertising.earnedPerAd << endl << endl;
+		cout << sAdvertising.numAds * sAdvertising.percentUsersClicked * sAdvertising.earnedPerAd << endl;
+	}
 	
 
+	
+	
+	
 */
