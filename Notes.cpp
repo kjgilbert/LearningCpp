@@ -445,6 +445,72 @@ bool IsEqual(double dX, double dY)
 	we want jjj to return to the value of 1 each time the iii loop iterates
 	q2 is in PrintASCII program
 	
+	do while lets the loop execute at least once even if the condition is false
+*/	do
+		statement;
+	while (condition);
+/*	so it checks the condition at the end and either stops if false or continues through again if true
+	** NOTE that the variable for which the condition is tested on MUST be declared outside the block, otherwise it will be deleted (b/c of scope) before the condition is reached
+	
+	for statements are useful when we know exactly how long we want to do something for
+*/	for (init-statement; expr1; expr2)
+		statement;
+/*	Variables with loop scope exist only within the loop, and are not accessible outside of it
+	the init-statement is only evaluated once, usually this is a variable declaration and assignment
+	then expr1 is evaluated - if false, the loop terminates immediately, if true, then statement is evaluated
+	then expr2 is evaluated, usually this increments a variable from the init-statement
+	then it evaluates expr1 and repeats
+*/	for (int iii=0; iii < 10; iii++) \\ assign iii to zero, while iii < 10, print iii, increment iii by 1 and repeat
+    cout << iii << " ";
+//	so in the above loop 0-9 will be printed out
+int Exponent(int nBase, int nExp)  // returns the value nBase ^ nExp
+{
+    int nValue = 1;
+    for (int iii=0; iii < nExp; iii++)
+        nValue *= nBase;
+    return nValue;
+}	
+/*	the above function returns the value nBase^nExp (nBase to the nExp power)
+	If nExp is 0, the for loop will execute 0 times, and the function will return 1.
+	If nExp is 1, the for loop will execute 1 time, and the function will return 1 * nBase.
+	If nExp is 2, the for loop will execute 2 times, and the function will return 1 * nBase * nBase.
+	
+	avoid off-by-one errors! When writing for loops, remember that the loop will execute as long as expr1 is true 
+	it's also possible to omit some parameters: */
+int iii=0;
+for ( ; iii < 10; )
+{
+    cout << iii << " ";
+    iii++;
+}	
+/*	that still prints out 0-9
+	
+	you can also omit the statement that is executed during the loop by simply putting a semicolon there.
+		this is called a null statement
+	BEWARE of accidentally doing this, e.g.:
+	it is easy to make the following mistake: */
+if (nValue == 0);
+    nValue = 1;
+//	The programmer's intent was to assign nValue the value of 1 only if nValue had the value 0. However, due to the misplaced semicolon after the if statement, this actually executes as:
+if (nValue == 0)
+    ;
+nValue = 1;
+/*	in the above case, nValue is set to one whether or not it previously equalled zero!!!
+	one can also iterate over several variables at once by using a comma */
+	for (int iii=0, jjj=9; iii < 10; iii++, jjj--)
+    cout << iii << " " << jjj << endl;
+/*	
+	5.7 QUIZ:
+	1. for (i = 0; i <=20; i += 2)
+		cout << i << endl;
+	2.	int SumTo(int nValue)
+		{
+			int sumValue;
+			for (i=1; i<=nValue; i++)
+				sumValue = i + sumValue; // could also do sumValue += i;
+			cout << sumValue << endl; // could also do return(sumValue);
+		}
+	3. it will try to make it -1 before the loop stops, but it was initiated as unsigned, so causes an error and the loop will run forever
 	
 	
 	
