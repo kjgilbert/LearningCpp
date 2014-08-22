@@ -603,9 +603,23 @@ unsigned int GetRandomNumber(int nLow, int nHigh)
 	};
 	int anAnimals[max_animals] = { 2, 4, 4, 4, 2, 0};
 	
+	usu. arrays are used with loops
 	
+	Loops are typically used with arrays to do one of three things:
+	1) Search for a value (eg. highest, lowest).
+	2) Calculate a value (eg. average, total)
+	3) Reorganize the array (eg. sort from lowest to highest)
 	
+	When searching for a value, a variable is typically used to hold the best candidate value seen so far (or the array index of the best candidate)
 	
+	QUIZ 6.3
+	1)
+	int anArray[9] = { 4, 6, 7, 3, 8, 2, 1, 9, 5 };
+	for(int nIndex = 0; nIndex < 9 ; nIndex++)
+		cout << anArray[nIndex] << \n;
+	
+	2)
+	see "PrintNumber.cpp"
 		
 	
 		
