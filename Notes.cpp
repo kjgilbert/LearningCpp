@@ -620,10 +620,116 @@ unsigned int GetRandomNumber(int nLow, int nHigh)
 	
 	2)
 	see "PrintNumber.cpp"
-		
 	
+	sorting arrays is very useful, done with a few diff. algorithms
+		swap function in the C std library can be used to swap elements of an array
+		#include <algorithm>
+	usu sort by going through the array and moving pairs of things around, e.g.:  */
+#include <algorithm> // for swap
+#include <iostream>
+
+int main()
+{
+    using namespace std;
+
+    int x = 2;
+    int y = 4;
+    cout << "Before swap: x = " << x << ", y = " << y << endl;
+    swap(x, y); // swap also lives in std namespace
+    cout << "After swap:  x = " << x << ", y = " << y << endl;
+}/*
+	This program prints:
+	Before swap: x = 2, y = 4
+	After swap:  x = 4, y = 2
+	
+	"selection sort" is slower but easy to understand
+	Selection sort performs the following steps:
+	1) Starting at index 0, search the entire array to find the smallest value
+	2) Swap the smallest value found with the value at index 0
+	3) Repeat steps 1 & 2 starting from the next index	*/
+const int nSize = 5;
+int anArray[nSize] = { 30, 50, 20, 10, 40 };
+
+// Step through each element of the array
+for (int nStartIndex = 0; nStartIndex < nSize; nStartIndex++)
+{
+    // nSmallestIndex is the index of the smallest element we've encountered so far.
+    int nSmallestIndex = nStartIndex; // THIS ITERATES UP WITH THE LOOP
+
+    // Search through every element starting at nStartIndex+1
+    for (int nCurrentIndex = nStartIndex + 1; nCurrentIndex < nSize; nCurrentIndex++)
+    {
+        // If the current element is smaller than our previously found smallest
+        if (anArray[nCurrentIndex] < anArray[nSmallestIndex])
+            // Store the index in nSmallestIndex
+            nSmallestIndex = nCurrentIndex;
+    }
+
+    // Swap our start element with our smallest element
+    swap(anArray[nStartIndex], anArray[nSmallestIndex]);
+}/*
+	
+	QUIZ 6.4
+	1)
+	selection sort {30,60,20,50,40,10}
+	
+	#include <algorithm> // for swap
+	const int nSize = 6;
+	int anArray[nSize] = {30,60,20,50,40,10};
+	for(int nStart = 0; nStart < nSize; nStart++)
+	{
+		int nSmallest = nStart;
+		for(int nCurrent = nStart + 1; nCurrent < nSize; nCurrent++)
+		{
+			if (anArray[nCurrent] < anArray[nSmallest])
+				nSmallest = nCurrent;
+		}
+		swap(anArray[nStart], anArray[nSmallest]);
+	}
+	
+	2)
+	descending order	
+	
+	#include <algorithm> // for swap
+	const int nSize = 6;
+	int anArray[nSize] = {30,60,20,50,40,10};
+	for(int nStart = 0; nStart < nSize; nStart++)
+	{
+		int nLargest = nStart;
+		for(int nCurrent = nStart + 1; nCurrent < nSize; nCurrent++)
+		{
+			if (anArray[nCurrent] > anArray[nLargest])
+				nLargest = nCurrent;
+		}
+		swap(anArray[nStart], anArray[nLargest]);
+	}
 		
 		
+	6.5 multidimensional arrays
+	elements of an array can be an array!! this is a multidimensional array
+		int anArray[3][5]; // a 3-element array of 5-element arrays, i.e. 3 rows, 5 columns
+		to access an element: anArray[2][3] = 7;
+	In a two-dimensional array, it is convenient to think of the first subscript as 
+		being the row, and the 2nd subscript as being the column
+	initialize values in it using nested braces, much like Nemo
+int anArray[3][5] =
+{
+{ 1, 2, 3, 4, 5, }, // row 0
+{ 6, 7, 8, 9, 10, }, // row 1
+{ 11, 12, 13, 14, 15 } // row 2
+};
+	the compiler actually ignores the inner braces, but keep them for readability!
+	it is possible to omit the first size specifier only, but never both
+int anArray[][5] =
+{
+{ 1, 2, 3, 4, 5, },
+{ 6, 7, 8, 9, 10, },
+{ 11, 12, 13, 14, 15 }
+};
+	Accessing all of the elements of a two-dimensional array requires two loops: one for the row, and one for the column.
+	Usually the row index is in the outer loop
+		to go through each column one row at a time
+	3-D arrays are possible but harder to initialize (use a loop)
 
 	
 	
