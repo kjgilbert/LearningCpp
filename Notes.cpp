@@ -558,9 +558,50 @@ unsigned int GetRandomNumber(int nLow, int nHigh)
 		uses the ctime header
 		then initialize srand() with a call to time(0)
 	
-			
+	
+	arrays - aggregate data type that lets you access multiple variables through a single name by the use of an index
+		all the variables within an array must have the same type
+		int anTestScores[30]; // allocate 30 integers
+		arrays always count from 0 to n-1 where n is the number of elements in the array
+*/	int anArray[5]; // Ok -- 5 is a literal constant
+
+	#define ARRAY_SIZE 5
+	int anArray[ARRAY_SIZE]; // Ok -- ARRAY_SIZE is a symbolic cons
+
+	int nSize = 5;
+	int anArray[nSize]; // Not ok! -- nSize is not a constant!	
+/*	
+	arrays must be declared using constants
+	an array’s size must be known at compile time
+		arrays can even hold structs
+	elements of an array are treated just like normal variables
+	
+	* if you don't initialize all the elements of an array, the remaining ones becomes 0's
+	// Initialize all elements to 0
+	int anArray[5] = { 0 };
+	
+	if you use a list to initialize the elements of an array, you don't have to say how long the array is
+	int anArray[] = { 0, 1, 2, 3, 4 }; // declare array of 5 elements
+	
+	no direct way to access number of elements in an array, but can do it indirectly:
+	int nElements = sizeof(anArray) / sizeof(anArray[0]);
 	
 	
+	QUIZ 6.2
+	1)
+	double anTemps[365] = { 0 };
+	2)
+	enum animals
+	{
+		chicken,
+		dog,
+		cat,
+		elephant,
+		duck,
+		snake,
+		max_animals
+	};
+	int anAnimals[max_animals] = { 2, 4, 4, 4, 2, 0};
 	
 	
 	
