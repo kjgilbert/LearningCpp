@@ -730,7 +730,401 @@ int anArray[][5] =
 	Usually the row index is in the outer loop
 		to go through each column one row at a time
 	3-D arrays are possible but harder to initialize (use a loop)
+	
+	6.6 - strings - a sequence of chars that are interpreted as a piece of text
+		they are represented by char arrays that have a null terminator
+		meaning the string ends with a \0 (ASCII code 0)
+		declare with: char szString[] = "string";
+			the above will be of length 7 because it has the null terminator
+		the size of a string cannot be changed once it is declared
+		you never want to replace with more chars because this will overwrite the null terminator and the CPU won't know where the string ends
+			so printing such a thing will continue through the memory slot until it hits a zero
+		you can change individual characters in the string by putting that char's location in the brackets []
+			remember it counts from zero
+char szString[] = "string"; // ok
+szString = "rope"; // not ok!
+	just like cannot do:
+int anArray[] = { 3, 5, 7, 9 };
+anArray = 8; // what does this mean?
+	
+	The recommended way of reading strings using cin is as follows:
+char szString[255];
+cin.getline(szString, 255);
+cout << "You entered: " << szString << endl;
+	This call to cin.getline() will read up to 254 characters into szString (leaving room for the null terminator!). 
+	Any excess characters will be discarded. In this way, we guarantee that buffer overflow will not occur.
+	
+	strcpy() allows you to make a copy of a string
+	
+char szSource[] = "Copy this!";
+char szDest[50];
+strcpy(szDest, szSource);
+cout << szDest; // prints "Copy this!"
+	BUT HIS CAN STILL CAUSE BUFFER OVERFLOWS
+	
+	It is better to use strncpy(), which takes a length parameter to prevent buffer overflow
+char szSource[] = "Copy this!";
+char szDest[50];
+strncpy(szDest, szSource, 49); // copy at most 49 characters (indices 0-48)
+szDest[49] = 0; // ensures the last character is a null terminator
+cout << szDest; // prints "Copy this!"
+	
+	Other useful functions:
+	strcat() — Appends one string to another (dangerous)
+	strncat() — Appends one string to another (with buffer length check)
+	strcmp() — Compare two strings (returns 0 if equal)
+	strncmp() — Compare two strings up to a specific number of characters (returns 0 if equal)
+	strlen() — Returns the length of a string (excluding the null terminator)
+	
+	THESE STRINGS ARE ALL IN THE STYLE OF PLAIN C
+	
+	it can be better to use the string class in the standard library for C++ (std::string) which comes from the string header
+	these strings can automatically resize if you assign things to them
+	e.g.:*/
+#include <string> // for std::string
+#include <iostream>
 
+int main()
+{
+    using namespace std; // for both cout and string
+    cout << "Enter your name: ";
+    string strString;
+    cin >> strString;
+    cout << "Hello, " << strString << "!" << endl;
+
+    cout << "Your name has: " << strString.length() <<
+            " characters in it" << endl;
+    cout << "The 2nd character is: " << strString[1] << endl;
+
+    strString = "Dave";
+    cout << "Your name is now " << strString << endl;
+    cout << "Goodbye, " << strString << endl;
+
+    return 0;
+}/*
+	One extremely useful function to use with std::string is getline()
+	this allows you to read an entire string even if it includes whitespace
+	This works:
+cout << "Enter your full name: ";
+string strName;
+getline(cin, strName);
+cout << "You entered: "<< strName <<endl;
+	
+	6.7 Pointers
+	a pointer is a variable that holds the address of another variable
+	declared with an asterisk between the data type and name
+int *pnPtr; // a pointer to an integer value
+double *pdPtr; // a pointer to a double value
+int* pnPtr2; // also valid syntax
+int * pnPtr3; // also valid syntax
+	Since pointers only hold addresses, when we assign a value to a pointer, the value 
+	has to be an address. To get the address of a variable, we can use the address-of operator (&)
+int nValue = 5;
+int *pnPtr = &nValue; // assign address of nValue to pnPtr
+	this means that pnPtr will have a value of 5 because it points to nValue's address which holds 5
+	the type of pointer needs to match the type of variable being pointed to
+	
+	dereference operator '*' evaluates the contents of the address it is pointing to
+	address symbol is '&'
+int nValue = 5;
+cout << &nValue; // prints address of nValue
+cout << nValue; // prints contents of nValue
+	
+int *pnPtr = &nValue; // pnPtr points to nValue
+cout << pnPtr; // prints address held in pnPtr, which is &nValue
+cout << *pnPtr; // prints contents pointed to by pnPtr, which is contents of nValue
+	so, when pnPtr is assigned to &nValue:
+		pnPtr is the same as &nValue
+		*pnPtr is the same as nValue
+	Because *pnPtr is the same as nValue, you can assign values to it just as if it were nValue
+	
+	sometimes it is useful to make a pointer to nothing, this is called a null pointer
+		assigned by setting it to address 0
+int *pnPtr;
+pnPtr = 0; // assign address 0 to pnPtr
+	OR
+int *pnPtr = 0;  // assign address 0 to pnPtr
+	
+	C (but not C++) also defines a special preprocessor define called NULL that evaluates to 0. 
+	Even though this is not technically part of C++, it’s usage is common enough that it will work in every C++ compiler
+	
+	null pointers are useful inside conditionals, to test if they have a value or not
+		also often used w/ dynamic memory allocation
+	the size of the pointer is always the same. This is because a pointer is just a memory address, 
+	and the number of bits needed to access a memory address on a given machine is always constant
+	
+	6.8 pointers, arrays, and pointer arithmetic
+	
+	arrays are actually in effect pointers that point to the first element of the array
+	so dereferencing an array returns element 0 (first element) of that array
+	because you can also do integer math on pointers, you can simply point to the next or previous space with pnPntr + 1 (or - 1)
+	it is not pointing to the address, but the next object of whatever type the array contains
+	the compiler automatically scales the objects by their byte size
+	it is rare to see + a number of minus 1 number with arrays
+	BUT ++ or -- are common for moving through contents of an array via pointers!
+	
+	* operator has higher precedence than addition, so parentheses are necessary, e.g.:
+int anArray[5] = { 9, 7, 5, 3, 1 };
+cout << *(anArray+1) << endl; // prints 7
+	
+	6.9 Dynamic memory allocation
+	because everything muts be declared at compile time, it can be difficult to do things conditionally
+	Dynamic memory allocation allows us to allocate memory of whatever size we want when we need it
+	
+	To allocate a single variable dynamically, we use the scalar (non-array) form of the new operator:
+		int *pnValue = new int; // dynamically allocate an integer
+	The new operator returns the address of the variable that has been allocated
+	
+	This address can be stored in a pointer, and the pointer can then be dereferenced to access the variable.
+int *pnValue = new int; // dynamically allocate an integer
+*pnValue = 7; // assign 7 to this integer
+	When we are done with a dynamically allocated variable, we need to explicitly tell C++ to free the memory for reuse. This is done via the scalar (non-array) form of the delete operator:
+delete pnValue; // unallocate memory assigned to pnValue
+pnValue = 0;
+	(the delete operator does not delete the pointer — it deletes the memory that the pointer points to)
+	
+	To allocate an array dynamically, we use the array form of new and delete (often called new[] and delete[]):
+int nSize = 12;
+int *pnArray = new int[nSize]; // note: nSize does not need to be constant!
+pnArray[4] = 7;
+delete[] pnArray;	
+	Because we are allocating an array, C++ knows that it should use the array version of new instead 
+	of the scalar version of new. Essentially, the new[] operator is called, even though the [] isn’t 
+	placed next to the new keyword
+	
+	When deleting a dynamically allocated array, we have to use the array version of delete, which 
+	is delete[]. This tells the CPU that it needs to clean up multiple variables instead of a single variable
+	
+	Using the scalar version of delete on an array can cause data corruption or other problems
+	
+	Dynamically allocated memory effectively has no scope. That is, it stays allocated until it is explicitly deallocated or until the program ends
+	However, the pointers used to access dynamically allocated memory follow the scoping rules of normal variables
+	
+	memory leak - if a dynamically allocated integer can not be or was not deleted, and its address can not be reallocated or reused
+	Memory leaks eat up free memory while the program is running, making less memory available not only to this program, but to other programs as well
+	
+	Memory leaks can also result if the pointer holding the address of the dynamically allocated memory is reassigned to another value:
+int nValue = 5;
+int *pnValue = new int;
+pnValue = &nValue; // old address lost, memory leak results
+	It is also possible to get a memory leak via double-allocation:
+int *pnValue = new int;
+pnValue = new int; // old address lost, memory leak results
+	The address returned from the second allocation overwrites the address of the first allocation. Consequently, the first allocation becomes a memory leak
+	
+	Null pointers (pointers set to address 0) are particularly useful when dealing with dynamic 
+	memory allocation. A null pointer basically says “no memory has been allocated yet”. This allows us to do things like conditionally allocate memory:
+// If pnValue isn't already allocated, allocate it
+if (!pnValue)
+    pnValue = new int;
+    
+    it is a good idea to set all pointers that are not used right away to 0
+int *pnValue = new int;
+int *pnOtherValue = 0; // will allocate later
+	Similarly, when a dynamically allocated variable is deleted, the pointer pointing to it 
+	is not zero’d. Consider the following snippet:
+int *pnValue = new int;
+delete pnValue; // pnValue not set to 0
+if (pnValue)
+    *pnValue = 5; // will cause a crash
+		Because pnValue has not been set to 0, the if statement condition evaluates to true, 
+		and the program tries to assign 5 to deallocated memory. This almost inevitably will cause 
+		a program to crash. It is never a good idea to leave a pointer pointing to deallocated memory. 
+		When deallocating memory, set the pointer that has been deallocated to 0 immediately afterward
+	need to add this line in program above: pnValue = 0;
+	
+	Finally, deleting a null pointer has no effect. Thus, there is no need for the following:
+if (pnValue)
+    delete pnValue;
+		Instead, you can just write:
+delete pnValue;
+		If pnValue is non-null, the dynamically allocated variable will be deleted. If it is null, nothing will happen
+	
+	Just like normal variables, pointers can be declared constant. 
+	There are two different ways that pointers and const can be intermixed, and they are very easy to mix up
+	
+	To declare a const pointer, use the const keyword between the asterisk and the pointer name
+int nValue = 5;
+int *const pnPtr = &nValue;
+	Just like a normal const variable, a const pointer must be initialized to a value upon declaration, 
+		and its value can not be changed. This means a const pointer will always point to the same value
+	pnPtr will always point to the address of nValue in the above example
+	However, because the value being pointed to is still non-const, it is possible to change 
+		the value being pointed to via dereferencing the pointer
+	
+	It is also possible to declare a pointer to a constant variable by using the const before the data type.
+int nValue = 5;
+const int *pnPtr = &nValue;
+*pnPtr = 6; // allowed, since pnPtr points to a non-const int
+	
+	Because a pointer to a const value is a non-const pointer, the pointer can be redirected to point at other values:
+int nValue = 5;
+int nValue2 = 6;
+const int *pnPtr = &nValue;
+pnPtr = &nValue2; // okay
+	
+	
+	To summarize:
+		A non-const pointer can be redirected to point to other addresses.
+		A const pointer always points to the same address, and this address can not be changed.
+		A pointer to a non-const value can change the value it is pointing to.
+		A pointer to a const value treats the value as const (even if it is not), and thus can not change the value it is pointing to.
+	
+	6.11 References
+	References are a type of C++ variable that act as an alias to another variable
+	A reference variable acts just like the original variable it is referencing. 
+	References are declared by using an ampersand (&) between the reference type and the variable name
+int nValue = 5; // normal integer
+int &rnRef = nValue; // reference to nValue
+	this ampersand does not indicate an address of something
+	
+	References are implicitly const. Like normal constant objects, references must be given a value upon declaration
+	a reference can not be “redirected” to another variable. Consider the following snippet:
+int nValue = 5;
+int nValue2 = 6;
+int &rnRef = nValue;
+rnRef = nValue2; // assigns value 6 to nValue -- does NOT change the reference!
+	
+	references are often used as function parameters because they allow us to access but not change the value of an object
+	they also work well to provide access to nested data, e.g. in a struct
+	
+	Consider the following struct:
+struct Something
+{
+    int nValue;
+    float fValue;
+};
+struct Other
+{
+    Something sSomething;
+    int nOtherValue;
+};
+Other sOther;
+
+int &rnValue = sOther.sSomething.nValue;
+// rnValue can now be used in place of sOther.sSomething.nValue
+	
+	6.12 references vs pointers and member selection
+	References and pointers have an interesting relationship — a reference acts like a 
+	const pointer that is implicitly dereferenced
+int nValue = 5;
+int *const pnValue = &nValue;
+int &rnValue = nValue;
+	*pnValue and rnValue evaluate identically. As a result, the following two statements produce the same effect:
+*pnValue = 6;
+rnValue = 6;
+	
+	Similarly, a const reference acts just like a const pointer to a const object that is implicitly dereferenced
+	Because references always “point” to valid objects, and can never be pointed to deallocated memory, references are safer to use than pointers
+	If a task can be solved with either a reference or a pointer, the reference should generally be preferred
+	Pointers should generally only be used in situations where references are not sufficient (such as dynamically allocating memory)
+	
+	It is common to have either a pointer or a reference to a struct (or class). 
+	You can select the member of a struct using the member selection operator (.)
+	
+struct Something
+{
+    int nValue;
+    float fValue;
+};
+
+// Member selection using actual struct variable
+Something sSomething;
+sSomething.nValue = 5;
+
+// Member selection using reference to struct
+Something &rsSomething = sSomething;
+rsSomething.nValue = 5;
+
+// Member selection using pointer to struct
+Something *psSomething = &sSomething;
+(*psSomething).nValue = 5;
+
+	Note that the pointer dereference must be enclosed in parenthesis, because the member 
+	selection operator has a higher precedence than the dereference operator
+	
+	syntax for access to structs and class members through a pointer is awkward so C++ offers 
+	a second member selection operator (->) for doing member selection from pointers. 
+	The following two lines are equivalent:
+(*psSomething).nValue = 5;
+psSomething->nValue = 5;
+	when doing member access through a pointer, always use the -> operator
+		it is easier to write
+		and there are no precedence issues to worry about
+	
+	
+	6.13 Void pointers
+	The void pointer, also known as the generic pointer, is a special type of pointer that 
+		can be pointed at objects of any data type
+	A void pointer is declared like a normal pointer, using the void keyword as the pointer’s type
+void *pVoid; // pVoid is a void pointer
+	A void pointer can point to objects of any data type:
+int nValue;
+float fValue;
+struct Something
+{
+    int nValue;
+    float fValue;
+};
+Something sValue;
+void *pVoid;
+pVoid = &nValue; // valid
+pVoid = &fValue; // valid
+pVoid = &sValue; // valid
+	
+	However, because the void pointer does not know what type of object it is pointing to, it can not be dereferenced
+	the void pointer must first be explicitly cast to another pointer type before it is dereferenced
+	it is also NOT possible to do pointer arithmetic on a void pointer
+	
+	Here’s an example of a void pointer in use:*/
+
+#include <iostream>
+
+enum Type
+{
+    INT,
+    FLOAT,
+    STRING,
+};
+
+void Print(void *pValue, Type eType)
+{
+    using namespace std;
+    switch (eType)
+    {
+        case INT:
+            cout << *static_cast<int*>(pValue) << endl;
+            break;
+        case FLOAT:
+            cout << *static_cast<float*>(pValue) << endl;
+            break;
+        case STRING:
+            cout << static_cast<char*>(pValue) << endl;
+            break;
+    }
+}
+
+int main()
+{
+    int nValue = 5;
+    float fValue = 7.5;
+    char *szValue = "Mollie";
+
+    Print(&nValue, INT);
+    Print(&fValue, FLOAT);
+    Print(szValue, STRING);
+    return 0;
+}
+	/*This program prints:
+	5
+	7.5
+	Mollie
+	
+	the above function seems like a neat way to make a single function handle multiple data 
+	types, C++ actually offers a much better way to do the same thing (via function overloading) 
+	that retains type checking to help prevent misuse
+	
+	CHAPTER 7
 	
 	
 	
